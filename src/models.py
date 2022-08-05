@@ -19,73 +19,86 @@ db = SQLAlchemy()
 #         }
 
 class User(db.Model):
-    UserId = db.Column(db.Integer, primary_key=True)
-    Name = db.Column(db.String(250), nullable=False)
-    Email = db.Column(db.String(250), nullable=False)
-    Address = db.Column(db.String(250), nullable=False)
-    Pasword = db.Column(db.String(250), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), nullable=False)
+    email = db.Column(db.String(250), nullable=False)
+    address = db.Column(db.String(250), nullable=False)
+    pasword = db.Column(db.String(250), nullable=False)
+    peoplefavoritos = db.relationship('PeopleFavoritos', lazy=True)
+    planetfavoritos = db.relationship('PlanetFavoritos', lazy=True)
+    vehiclesfavoritos = db.relationship('VehiclesFavoritos', lazy=True)
 
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
             "username": self.username,
             "email": self.email
         }
 
-class Peoplefavoritos(db.Model):
-    UserId = db.Column(db.Integer, ForeignKey('User.UserId'), primary_key=True, )
-    PeopleId = db.Column(db.String(250), primary_key=True)
+class PeopleFavoritos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('User.id'))
+    people_id = db.Column(db.Integer, ForeignKey('People.id'))
 
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
-            "username": self.username,
-            "email": self.email
+            "id": self.id,
+            "user_id": self.user_id,
+            "people_id": self.people_id
         }
 
-class Planetfavoritos(db.Model):
-    UserId = db.Column(db.Integer, ForeignKey('User.UserId'), primary_key=True, )
-    PlanetId = db.Column(db.String(250), primary_key=True)
+class PlanetFavoritos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('User.id'))
+    planet_id = db.Column(db.Integer, ForeignKey('Planet.id'))
 
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
-            "username": self.username,
-            "email": self.email
+            "id": self.id,
+            "user_id": self.user_id,
+            "planet_id": self.planet_id
         }
 
-class Vehiclesfavoritos(db.Model):
-    UserId = db.Column(db.Integer, ForeignKey('User.UserId'), primary_key=True, )
-    VehiclesId = db.Column(db.String(250), primary_key=True)
+class VehiclesFavoritos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('User.id'))
+    vehicles_id = db.Column(db.Integer, ForeignKey('Vehicles.id'))
 
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
-            "username": self.username,
-            "email": self.email
+            "id": self.id,
+            "user_id": self.user_id,
+            "vehicles_id": self.vehicles_id
         }
 
 class People(db.Model):
-    PeopleId = db.Column(db.Integer, ForeignKey('Peoplefavoritos.UserId'), primary_key=True,)
+    id = db.Column(db.Integer, ForeignKey('Peoplefavoritos.UserId'), primary_key=True,)
     Name = db.Column(db.String(250))
     Birthday = db.Column(db.String(250))
     Gender = db.Column(db.String(250))
     Height = db.Column(db.String(250))
     Skin_color = db.Column(db.String(250))
     Eye_color = db.Column(db.String(250))
+    peoplefavoritos = db.relationship('PeopleFavoritos', lazy=True)
+    planetfavoritos = db.relationship('PlanetFavoritos', lazy=True)
+    vehiclesfavoritos = db.relationship('VehiclesFavoritos', lazy=True)
+
 
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
             "username": self.username,
             "email": self.email
@@ -99,11 +112,14 @@ class Planets(db.Model):
     Terrain = db.Column(db.String(250))
     Rotation_period = db.Column(db.String(250))
     Orbital_period = db.Column(db.String(250))
+    peoplefavoritos = db.relationship('PeopleFavoritos', lazy=True)
+    planetfavoritos = db.relationship('PlanetFavoritos', lazy=True)
+    vehiclesfavoritos = db.relationship('VehiclesFavoritos', lazy=True)
 
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
             "username": self.username,
             "email": self.email
@@ -117,11 +133,14 @@ class Vehicles(db.Model):
     Length = db.Column(db.String(250))
     Cargo_capacity = db.Column(db.String(250))
     Max_Speed = db.Column(db.String(250))
+    peoplefavoritos = db.relationship('PeopleFavoritos', lazy=True)
+    planetfavoritos = db.relationship('PlanetFavoritos', lazy=True)
+    vehiclesfavoritos = db.relationship('VehiclesFavoritos', lazy=True)
     
     def __repr__(self):
         return '<Person %r>' % self.username
 
-    def to_dic(self):
+    def serialize(self):
         return {
             "username": self.username,
             "email": self.email
