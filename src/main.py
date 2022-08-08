@@ -37,7 +37,6 @@ def handle_hello():
     response_body = {
         "msg": "Hello, this is your GET /user response "
     }
-
     return jsonify(response_body), 200
 
 
@@ -52,3 +51,40 @@ def getPeople():
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=False)
+
+@app.route('/planets', methods=['GET'])
+def getPlanets():
+
+    planets = Planets.query.all()
+
+    return jsonify([planet.serialize() for planet in planets]), 200
+
+# this only runs if `$ python src/main.py` is executed
+if __name__ == '__main__':
+    PORT = int(os.environ.get('PORT', 3000))
+    app.run(host='0.0.0.0', port=PORT, debug=False)
+
+
+@app.route('/vehicles', methods=['GET'])
+def getVehicles():
+
+    vehicles = Vehicles.query.all()
+
+    return jsonify([vehicle.serialize() for vehicle in vehicles]), 200
+
+# this only runs if `$ python src/main.py` is executed
+if __name__ == '__main__':
+    PORT = int(os.environ.get('PORT', 3000))
+    app.run(host='0.0.0.0', port=PORT, debug=False)
+
+# @app.route('/peoplefavoritos/<user_id>', methods=['GET'])
+# def handle(user_id):
+
+#     peoplefavoritos 
+    
+#     response_body = {
+#         "msg": "Hello, this is your GET /user response "
+#     }
+
+#     return jsonify(response_body), 200
+

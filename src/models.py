@@ -46,48 +46,60 @@ class People(db.Model):
     skin_color = db.Column(db.String(250))
     eye_color = db.Column(db.String(250))
 
-
     def __repr__(self):
         return '<Person %r>' % self.name
 
     def serialize(self):
         return {
-            "username": self.username,
-            "email": self.email
+            "username": self.name,
+            "email": self.email,
+            "birthday": self.birthday,
+            "gender": self.gender,
+            "height": self.height,
+            "skin_color": self.skin_color,
+            "eye_color": self.eye_color
         }
 
 class Planets(db.Model):
     id = db.Column(db.Integer, primary_key=True,)
-    Name = db.Column(db.String(250))
-    Population = db.Column(db.String(250))
-    Climate = db.Column(db.String(250))
-    Terrain = db.Column(db.String(250))
-    Rotation_period = db.Column(db.String(250))
-    Orbital_period = db.Column(db.String(250))
+    name = db.Column(db.String(250))
+    population = db.Column(db.String(250))
+    climate = db.Column(db.String(250))
+    terrain = db.Column(db.String(250))
+    rotation_period = db.Column(db.String(250))
+    orbital_period = db.Column(db.String(250))
 
     def __repr__(self):
-        return '<Person %r>' % self.username
+        return '<Planet %r>' % self.name
 
     def serialize(self):
         return {
-            # "username": self.username,
-            # "email": self.email
+            "username": self.name,
+            "population": self.population,
+            "climate": self.climate,
+            "terrain": self.terrain,
+            "rotation_period": self.rotation_period,
+            "orbital_period": self.orbital_period
         }
 
 class Vehicles(db.Model):
     id = db.Column(db.Integer, primary_key=True,)
-    Name = db.Column(db.String(250))
-    Model = db.Column(db.String(250))
-    Vehicles_class = db.Column(db.String(250))
-    Length = db.Column(db.String(250))
-    Cargo_capacity = db.Column(db.String(250))
-    Max_Speed = db.Column(db.String(250))
+    name = db.Column(db.String(250))
+    model = db.Column(db.String(250))
+    vehicles_class = db.Column(db.String(250))
+    length = db.Column(db.String(250))
+    cargo_capacity = db.Column(db.String(250))
+    max_Speed = db.Column(db.String(250))
     
     def __repr__(self):
-        return '<Person %r>' % self.username
+        return '<Vehicle %r>' % self.name
 
-    # def serialize(self):
-    #     return {
-    #         "username": self.username,
-    #         "email": self.email
-    #     }
+    def serialize(self):
+        return {
+            "username": self.name,
+            "model": self.model,
+            "vehicles_class": self.vehicles_class,
+            "length": self.length,
+            "cargo_capacity": self.cargo_capacity,
+            "max_Speed": self.max_Speed
+        }
